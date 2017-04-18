@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.widget.TextView;
 
 /**
  * Created by user on 2017/4/18.
@@ -16,15 +17,18 @@ import android.os.Build;
 public class BR_Notification extends BroadcastReceiver {
     static int id = 70000;
 
+    TextView tv;
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        //this.tv=(TextView)findViewByID();
         String msg = intent.getStringExtra("KEY_MSG");
 
         Intent newintent = new Intent();
         newintent.setClass(context, MainActivity.class);
+        newintent.putExtra("name",msg);
+
         PendingIntent pendingIntent = PendingIntent.
-                getActivity(context, 0, newintent, 0);
+                getActivity(context, 0, newintent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notify = null;
         if (Build.VERSION.SDK_INT >= 16) {
