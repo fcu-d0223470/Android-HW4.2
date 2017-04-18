@@ -28,12 +28,13 @@ public class BR_Notification extends BroadcastReceiver {
         newintent.putExtra("name",msg);
 
         PendingIntent pendingIntent = PendingIntent.
-                getActivity(context, 0, newintent, PendingIntent.FLAG_UPDATE_CURRENT);
+                getActivity(context, 0, newintent, PendingIntent.FLAG_ONE_SHOT);
 
         Notification notify = null;
         if (Build.VERSION.SDK_INT >= 16) {
             notify = newNotification(context, pendingIntent,
                     "(New) Broadcast is received.", msg);
+            notify.flags=Notification.FLAG_AUTO_CANCEL;
         } else {
             notify = oldNotification(context, pendingIntent,
                     "(Old) Broadcast is received.", msg);
